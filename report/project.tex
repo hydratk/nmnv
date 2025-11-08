@@ -1,1 +1,132 @@
-% note: placeholder file
+\documentclass{beamer}
+\usepackage{amsmath}%
+\usepackage{amsfonts}%
+\usepackage{amssymb}%
+
+%\usepackage{hyperref}
+
+\usepackage{graphicx}
+\usepackage{subfig}
+
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{multicol}
+%\usepackage{natbib}%
+\usepackage{units}
+
+\usepackage{stmaryrd}
+\usepackage{gensymb}
+\usepackage{bibentry}
+\usepackage{accents}
+
+%\usepackage{booktabs}
+
+\usepackage{tensor}
+\usepackage[bbgreekl]{mathbbol}
+\usepackage{bm}
+\usepackage{ulem}
+
+% FANCY TABLES
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{threeparttable}
+\usepackage{media9}
+
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+\usetheme{CambridgeUS}
+%\usetheme{Pittsburgh}
+%\usetheme{default}
+%\mode<presentation>
+
+%FOR CAMBRIDGE US THEME -- red bullets/captions in itemize environment
+\setbeamercolor{item projected}{bg=red}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{transparent}
+
+\setbeamercolor*{enumerate item}{fg=red}
+\setbeamercolor*{enumerate subitem}{fg=red}
+\setbeamercolor*{enumerate subsubitem}{fg=red}
+
+\setbeamercolor{block title}{fg=red}
+\setbeamercolor{caption name}{fg=red}
+\setbeamertemplate{footline}[frame number]{}
+
+\uselanguage{English}
+\languagepath{English}
+
+\usepackage{listings,xcolor}
+
+\title{On Krylov subspace approximations to the matrix exponential operator}
+\author{Purple team \\[0.5em] Marek Fürst, Ján Kovačovský, Ida Nyárfás, Jaroslav Paidar, Petr Rašek}
+\date{}
+
+
+\let\newblock\relax
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\bibliographystyle{plain}
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+  \frametitle{Introduction}
+  \begin{itemize}
+      \item Approximation of $exp(\tau A)v$ using Krylov methods, A big matrix, $\tau$ step size
+      \item Error bounds for Arnoldi and Lanczos algorithms
+      \item Faster convergence than $(I-\tau A)^{-1}v$ for stiff ODE problems, new integration methods
+      \item Bound $\frac{|| \tau A ||^m}{m!}$, superlinear convergence for $m \gg || \tau A ||$
+      \item Better behaviour for matrix classes: SND, skew-Hermitian, dependent on eigenvalues distribution
+  \end{itemize}
+\end{frame}
+
+\section{Arnoldi approximation of matrix functions}
+\begin{frame}
+  \frametitle{Matrix function definition}
+  \begin{itemize}
+      \item $A V_m = V_m H_m + h_{m+1,m} v_m e^T_m, H_m = V^*_m A V_m$
+      \item $q_{m-1} (A) v = V_m q_{m-1} (H_m) e_1 \implies (\lambda I - A)^{-1}v \approx V_m (\lambda I - H_m)^{-1} e_1$
+      \item Numerical range $\mathcal{F}(A) = \{ x^* Ax : x \in \mathbb{C}^N, || x || = 1 \}$, $\mathcal{F}(H_m) \subset \mathcal{F}(A)$
+      \item $f(A) v = \frac{1}{i 2 \pi} \int _{\Gamma} f( \lambda ) V_m ( \lambda I - H_m )^{-1} e_1 d \lambda$, $\Gamma$ is contour around $\mathcal{F}(A)$
+      \item $f(A) v \approx V_m f(H_m) e_1$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Error bound lemma}
+  \begin{itemize}
+    \item $|| f(A) v - V_m f(H_m) e_1 || \le \frac{M}{2 \pi} \int _{\Gamma} |f( \lambda ) - q_{m-1} (\lambda)| |\phi (\lambda)|^{-m} |d \lambda|$
+    \item $\phi$ conformal mapping from exterior of $E$ to exterior of unit circle
+    \item $\Gamma$ piecewise smooth, $f$ analytic and continuous to boundary
+    \item $M = l(\partial E) / [d(\partial E) d(\Gamma)]$, $l(\partial E)$ length of boundary, $d(S)$ distance between $\mathcal{F}(A)$ and subset $S$, $E$ convex closed bounded set in complex plane
+    \item Proof idea
+    \item $|| (\lambda I - A)^{-1} v - V_m (\lambda I - H_m) ^{-1} e_1 || \le c || p_m (A) ||$
+    \item $p_m (A) = \frac{1}{2 \pi i} \int _{\partial E} p_m (z) (zI - A)^{-1} dz \implies || p_m(A) || \le c \max_{z \in E} |p_m(z)|$ 
+  \end{itemize}
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+%
+%
+%
+%
+% DOCUMENT ENDS HERE
+%
+%
+%
+%
+
+
+
