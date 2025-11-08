@@ -81,7 +81,7 @@
       \item Error bounds for Arnoldi and Lanczos algorithms
       \item Faster convergence than $(I-\tau A)^{-1}v$ for stiff ODE problems, new integration methods
       \item Bound $\frac{|| \tau A ||^m}{m!}$, superlinear convergence for $m \gg || \tau A ||$
-      \item Better behaviour for matrix classes: SND, skew-Hermitian, dependent on eigenvalues distribution
+      \item Better behaviour for matrix classes: HND, skew-Hermitian, dependent on eigenvalues distribution
   \end{itemize}
 \end{frame}
 
@@ -105,9 +105,77 @@
     \item $\Gamma$ piecewise smooth, $f$ analytic and continuous to boundary
     \item $M = l(\partial E) / [d(\partial E) d(\Gamma)]$, $l(\partial E)$ length of boundary, $d(S)$ distance between $\mathcal{F}(A)$ and subset $S$, $E$ convex closed bounded set in complex plane
     \item Proof idea
-    \item $|| (\lambda I - A)^{-1} v - V_m (\lambda I - H_m) ^{-1} e_1 || \le c || p_m (A) ||$
+    \item $|| (\lambda I - A)^{-1} v - V_m (\lambda I - H_m) ^{-1} e_1 || \le c || p_m (A) ||, p_m (\lambda) = 1$
     \item $p_m (A) = \frac{1}{2 \pi i} \int _{\partial E} p_m (z) (zI - A)^{-1} dz \implies || p_m(A) || \le c \max_{z \in E} |p_m(z)|$ 
+    \item $\max_{z \in E} |p_m(z)| \le c |\phi(\lambda)|^{-m}$ 
   \end{itemize}
+\end{frame}
+
+\section{Matrix exponential approximation}
+\begin{frame}
+  \frametitle{Error bound for Hermitian negative semidefinite matrix}
+  \begin{itemize}
+    \item Eigenvalues in $[-4 \rho, 0], \varepsilon _m = || \exp(\tau A)v - V_m \exp(\tau H_m) e_1 ||$
+    \item $\varepsilon _m \le 10 e^{-m^2 / (5 \rho \tau)}$ for $\sqrt{4 \rho \tau} \le m \le 2 \rho \tau$
+    \item $\varepsilon _m \le 10 (\rho \tau)^{-1} e^{- \rho \tau} \left ( \frac{e \rho \tau}{m} \right ) ^m$ for $m \ge 2 \rho \tau$
+    \item Example: $A$ diagonal with eigenvalues in $[-40,0]$, $v$ random vector of dimension $1001$
+    \item Figure: Convergence compared with linear decay for CG $(I-A)^{-1}v$ and theoretical bound (theorem and Taylor remainder)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Error bound for Hermitian negative semidefinite matrix}
+  Add figure
+  \\
+  Also consider Theorem 3 for eigenvalues clustering, no graph in paper, but it would be interesting.
+  \\ General note, proofs are technical and only sketched in paper. Consider some figures illustrating conformal mappings in complex plane.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Error bound for skew-Hermitian matrix}
+  \begin{itemize}
+    \item Eigenvalues on imaginary axis in interval of length $4 \rho$
+    \item $\varepsilon _m \le 12 e^{- (\rho \tau)^2 / m} \left ( \frac{e \rho \tau}{m} \right ) ^m$ for $m \ge 2 \rho \tau$
+    \item Example: $A$ diagonal with eigenvalues in $[-20i, 20i]$, $v$ random vector of dimension $1001$
+    \item Figure: Convergence compared with linear decay for BiCG $(I-A)^{-1}v$ and theoretical bound (theorem and Taylor remainder)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Error bound for skew-Hermitian matrix}
+  Add figure
+  \\
+  Also consider Theorem 5 for numerical range in disk, no graph in paper, but it would be interesting.
+\end{frame}
+
+\section{Lanczos approximation of matrix functions}
+\begin{frame}
+  \frametitle{Lanczos method}
+  \begin{itemize}
+    \item Second basis $W_m = (w_1, \ldots, w_m)$ of Krylov subspace $K_m (A^*, w_1)$
+    \item Biorthogonality condition $(v_i, w_j) = \delta_{ij}$, $D_m = W_m ^* V_m$ block diagonal
+    \item $H_m = D_m ^{-1} W_m ^* A V_m$ block triagonal, short recurrences
+    \item $\mathcal{F}(H_m) \not\subset \mathcal{F}(A)$, oblique projection
+    \item pseudospectrum $\Lambda _\varepsilon (A) = \{ \lambda \in \mathbb{C}: || (\lambda I - A)^{-1} || \ge \varepsilon ^{-1} \}$
+    \item Condition number of eigenvectors matrix $\kappa _e (A) = || X || \cdot || X^{-1} ||$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Error bounds}
+  \begin{itemize}
+    \item $\Lambda _e (A) \subset E, \Lambda _\gamma (A) \bigcup \Lambda _\gamma (H_m) \subset G$
+    \item Error bound lemma with $M = \frac{1}{2} (1 + || V_m || \cdot || D_m ^{-1} W_m ^* ||) l(\partial E)/(\varepsilon \gamma)$
+    \item $A$ diagonalizable, spectrum $\Lambda (A) \subset E, \Lambda (H_m) \subset G$, $|| (\lambda I - H_m)^{-1} || \le \gamma ^{-1}$
+    \item Error bound lemma with $M = 3 \kappa _\varepsilon (A) (\delta ^{-1} + || V_m || \cdot || D_m ^{-1} W_m ^* || \gamma^{-1})$, $\delta$ is distance between $\Lambda (A)$ and $\Gamma$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Examples}
+  No graphs in paper, consider some examples to show bounds.
+  \\
+  Last section about ODE schemes could be omitted, no graphs just scheme definition.
 \end{frame}
 
 \end{document}
