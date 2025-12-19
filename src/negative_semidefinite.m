@@ -37,12 +37,12 @@ tau = 1;
 e = exp(1);
 
 Krylov_estimate = zeros(1,maxit);
-prefactor = (5*(rho*tau)^-1 + 3*sqrt(pi)*(rho*tau)^-0.5);
+prefactor = 10 * (rho*tau)^(-1) * exp(-rho*tau);
 for m = ceil(sqrt(4*rho*tau)) : ceil(2*rho*tau)-1
     Krylov_estimate(m) = 10 * exp((-m^2)/(5*rho*tau));
 end
 for m = ceil(2*rho*tau):maxit
-    Krylov_estimate(m) = prefactor * exp(rho^2*tau^2/m) * exp(-2*rho*tau) * (e*rho*tau/m)^m;
+    Krylov_estimate(m) = prefactor * (e*rho*tau/m)^m;
 end
 
 Taylor_estimate = zeros(1,maxit);
@@ -61,7 +61,7 @@ semilogy(Krylov_estimate)
 semilogy(Taylor_estimate)
 ylim([1e-10, 1e1])
 title('nagative semidefinite matrix')
-legend('e^A v', '(I-A)^{-1} v', 'estimate from article', 'Taylor estimate', 'Location', 'southwest')
+legend('e^A v', '(I-A)^{-1} v', 'estimate from article', 'Taylor estimate', 'Location', 'northeast')
 xlabel("number of iterations")
 ylabel("relative error")
 hold off
