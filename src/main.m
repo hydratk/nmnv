@@ -12,5 +12,8 @@ Lanczos_negative_semidefinite
 % Skew-Hermitian matrix using Lanczos method
 Lanczos_skew_Hermitian
 
+% Example plot for theorem 6
+thm6
+
 close all
 clear all
