@@ -58,7 +58,7 @@
 \title[Krylov Matrix Exponentials]{On Krylov Subspace Approximations to the Matrix Exponential Operator}
 \subtitle{Reproducing Results from Hochbruck \& Lubich (1997)}
 \author{Purple Team \\[0.5em] Marek Fürst, Ján Kovačovský, Ida Nyárfás, Jaroslav Paidar, Petr Rašek}
-\date{January 2026}
+\date{\today}
 
 \begin{document}
 
@@ -83,13 +83,10 @@
 
 \begin{frame}{Motivation}
     \begin{itemize}
-        \item \textbf{Goal}: Compute $e^{\tau A}v$ efficiently for large sparse $A$.
+        \item \textbf{Goal}: Compute $e^{\tau A}v$ efficiently for large sparse matrices $A$.
         \item \textbf{Context}: Stiff ODEs; exponential integrators vs. linear solves $(I - \gamma \tau A)^{-1}v$.
         \item \textbf{Key Insight}: Krylov for $e^{\tau A}v$ converges faster; depends on $\mathcal{F}(A)$.
     \end{itemize}
-    \begin{block}{Our Work}
-        Reproduced convergence plots in MATLAB for key cases.
-    \end{block}
 \end{frame}
 
 % -----------------------------------------------------------------------------
