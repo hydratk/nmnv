@@ -1,5 +1,6 @@
 clear all;
 close all;
+run('../styles/style.m')
 
 %% construction of the matrix A and vector v from the article
 A = zeros(1001);
@@ -9,13 +10,12 @@ end
 v = rand(1001,1);
 v = v/norm(v);
 
-%% convergence cruve for exp(A)*v and (I-A)^-1 *v
-
+%% convergence curve for exp(A)*v and (I-A)^-1 *v
 exact_exp_times_v = expmv(A,v);
 exact_inv_times_v = (eye(1001) - A) \ v;
 
 maxit = 80;
-[V,H] = myArnoldi_mgs(A,v,maxit); % function MyArnoldi_mgs() from lab 2
+[V,H] = myArnoldi_mgs(A,v,maxit); 
 
 error_exp_times_v = zeros(1,maxit);
 error_inv_times_v = zeros(1,maxit);
@@ -31,7 +31,6 @@ for j = 1:maxit
 end
 
 %% tabulate estimates
-
 rho = 10;
 tau = 1;
 e = exp(1);
@@ -52,17 +51,58 @@ for m = 1 : maxit
 end
 
 %% plot figure
-
 fig = figure;
-semilogy(error_exp_times_v) 
+% Make figure wider so subplots have room for legends/labels
+% fig.Position = [100, 100, 1200, 500]; 
+
+% --- Subplot 1: Full Range with Estimates ---
+ax1 = subplot(1, 2, 1); 
+semilogy(1:length(error_exp_times_v), error_exp_times_v, '-o', 'DisplayName', '$e^A v$')
 hold on
-semilogy(error_inv_times_v)
-semilogy(Krylov_estimate)
-semilogy(Taylor_estimate)
-ylim([1e-10, 1e1])
-title('nagative semidefinite matrix')
-legend('e^A v', '(I-A)^{-1} v', 'estimate from article', 'Taylor estimate', 'Location', 'northeast')
-xlabel("number of iterations")
-ylabel("relative error")
+semilogy(1:length(error_inv_times_v), error_inv_times_v, '-o', 'DisplayName', '$(I-A)^{-1} v$')
+semilogy(1:length(Krylov_estimate), Krylov_estimate, '-o', 'DisplayName', 'Estimate from article')
+semilogy(1:length(Taylor_estimate), Taylor_estimate, '-o', 'DisplayName', 'Taylor estimate')
+
+% Axes settings
+ax1.YScale = 'log';
+ax1.YMinorTick = 'off';
+ax1.YMinorGrid = 'off';
+ax1.YTick = 10.^(-10:2:0);
+ax1.YLim = [1e-10 1e1];
+
+title(ax1, 'Negative Semidefinite Matrix')
+xlabel(ax1, 'Number of iterations')
+ylabel(ax1, 'Relative error')
+legend(ax1, 'show', 'Location', 'northeast', 'Interpreter', 'latex');
 hold off
-exportgraphics(fig ,'negative_semidefinite.png')
+
+
+% --- Subplot 2: Zoomed View (Errors Only) ---
+ax2 = subplot(1, 2, 2);
+
+% Capture handles (h1, h2) to explicitly pass to legend later
+semilogy(1:length(error_exp_times_v), error_exp_times_v, '-o', 'DisplayName', '$e^A v$')
+hold on
+semilogy(1:length(error_inv_times_v), error_inv_times_v, '-o', 'DisplayName', '$(I-A)^{-1} v$')
+semilogy(1:length(Krylov_estimate), Krylov_estimate, '-o', 'DisplayName', 'Estimate from article')
+semilogy(1:length(Taylor_estimate), Taylor_estimate, '-o', 'DisplayName', 'Taylor estimate')
+
+% Axes settings
+ax2.YScale = 'log';
+ax2.YMinorTick = 'off';
+ax2.YMinorGrid = 'off';
+% Adjusted limits to ensure data is visible. 
+% If error is > 1e-4, the previous limits [1e-16 1e-4] would show a blank plot.
+ax2.YLim = [min(error_exp_times_v) max(Taylor_estimate)]; 
+ax2.YTick = 10.^(-16:2:ceil(log10(max(Taylor_estimate))));
+
+title(ax2, 'Negative Semidefinite Matrix (Zoomed)')
+xlabel(ax2, 'Number of iterations')
+ylabel(ax2, 'Relative error')
+
+% Pass the handles [h1, h2] to force legend to recognize these lines
+legend(ax2, 'Location', 'northeast', 'Interpreter', 'latex');
+hold off
+
+% Export
+exportgraphics(fig, '../graphics/negative_semidefinite.pdf', 'ContentType', 'vector');
