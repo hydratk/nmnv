@@ -89,6 +89,9 @@
     \end{itemize}
 \end{frame}
 
+% TODO: add plots with spectrum (eigenvalue distribution)
+% TODO: add comparison between Arnoldi and Lanczos case
+
 % -----------------------------------------------------------------------------
 % THEORY: ARNOLDI
 % -----------------------------------------------------------------------------
@@ -137,7 +140,7 @@
 \begin{frame}{Results}
     \begin{figure}
         \centering
-        \includegraphics[width=0.85\textwidth]{negative_semidefinite.png}
+        \includegraphics[width=0.85\textwidth]{../graphics/negative_semidefinite.pdf}
         \caption{Error vs. CG for $(I - A)^{-1}v$; eigenvalues $[-40, 0]$, $N=1001$.}
     \end{figure}
 \end{frame}
@@ -158,7 +161,7 @@
 \begin{frame}{Results}
     \begin{figure}
         \centering
-        \includegraphics[width=0.85\textwidth]{skew_Hermitian.png}
+        \includegraphics[width=0.85\textwidth]{../graphics/skew_hermitian.pdf}
         \caption{Error vs. BiCG for $(I - A)^{-1}v$; eigenvalues $[-20i, 20i]$, $N=1001$.}
     \end{figure}
 \end{frame}
@@ -180,7 +183,7 @@
     \begin{columns}
         \begin{column}{0.5\textwidth}
             \begin{figure}
-                \includegraphics[width=\textwidth]{Lanczos_negative_semidefinite.png}
+                \includegraphics[width=\textwidth]{../graphics/lanczos_negative_semidefinite.pdf}
                 \caption{Symmetric negative semidefinite.}
             \end{figure}
         \end{column}
